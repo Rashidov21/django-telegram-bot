@@ -1,5 +1,4 @@
 import random
-from django.shortcuts import render
 from django.http import HttpResponseNotFound
 from rest_framework import serializers
 from rest_framework.views import APIView
@@ -13,7 +12,7 @@ class WordsSerializator(serializers.ModelSerializer):
 
     class Meta:
         model = Words
-        fields = ["pk","word","gender"]
+        fields = ["pk", "word", "gender"]
 
 
 class RandomWord(APIView):
@@ -24,7 +23,8 @@ class RandomWord(APIView):
         return Response(serialized_random_word.data )
 
 class NextWord(APIView):
-    def get(self,request,pk,format=None):
+
+    def get(self, request, pk, format=None):
         word = Words.objects.filter(pk__gt=pk).first()
         if not word:
             return HttpResponseNotFound()
